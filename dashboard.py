@@ -185,3 +185,9 @@ def format_number(num):
 
 ###########################################
 col = st.columns((1.5, 4.5, 2), gap='medium')
+
+with col[1]:
+    st.markdown('#### Total Ranking')
+    
+    heatmap = make_heatmap(df_reshaped, 'Categories', 'Ranking', 'population', selected_color_theme)
+    st.altair_chart(heatmap, use_container_width=True)
