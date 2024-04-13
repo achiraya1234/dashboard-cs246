@@ -104,7 +104,7 @@ def format_number(num):
     return f'{num // 10} K'
 
 ###########################################
-col = st.columns((3, 4, 3), gap='medium')
+col = st.columns((4, 6), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
@@ -116,8 +116,8 @@ with col[1]:
     heatmap = make_heatmap(df_reshaped, 'Categories', 'Ranking', 'population', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
 
-with col[2]:
-    st.markdown('#### Top States')
+
+    st.markdown('#### Categories')
 
     st.dataframe(df_selected_Ranking_sorted,
                  column_order=("Categories", "population"),
