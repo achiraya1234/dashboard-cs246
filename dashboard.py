@@ -46,14 +46,19 @@ x_chart = alt.Chart(df30).mark_rect().encode(
     x=alt.X('Categories:N', title='Categories', labelAngle=0),
     color=alt.Color('Rank:N', title='Rank'),
     tooltip='value:Q'
+).properties(
+    width=300,
+    height=300
 )
 
 y_chart = alt.Chart(df30).mark_rect().encode(
     y=alt.Y('Rank:N', title='Rank', axis=alt.Axis(labelAngle=0)),
     color=alt.Color('Categories:N', title='Categories'),
     tooltip='value:Q'
+).properties(
+    width=300,
+    height=300
 )
 
 # แสดงแผนภูมิใน Streamlit
-st.altair_chart(x_chart & y_chart)
-
+st.altair_chart(alt.hconcat(x_chart, y_chart))
