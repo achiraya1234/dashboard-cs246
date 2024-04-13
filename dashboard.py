@@ -76,7 +76,7 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
           #    alt.Tooltip('year:O', title='Year'),
           #    alt.Tooltip('population:Q', title='Population')
           #]
-      ).properties(width=1000
+      ).properties(width=900
       ).configure_axis(
       labelFontSize=12,
       titleFontSize=12
