@@ -65,7 +65,7 @@ alt.themes.enable("dark")
 
 heatmap = alt.Chart(df_reshaped).mark_rect().encode(
         y=alt.Y('Categories:O', axis=alt.Axis(title="Categories", titleFontSize=16, titlePadding=15, titleFontWeight=900, labelAngle=0)),
-        x=alt.X('Ranking:O', axis=alt.Axis(title="Ranking", titleFontSize=16, titlePadding=15, titleFontWeight=900)),
+        x=alt.X('Ranking:O', axis=alt.Axis(title="Ranking", titleFontSize=16, titlePadding=15, titleFontWeight=900, labelAngle=0)),
         color=alt.Color('max(population):Q',
                          legend=alt.Legend(title=" "),
                          scale=alt.Scale(scheme="blueorange")),
