@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import matplotlib.pyplot as plt
 
 st.set_page_config(
     page_title="Dashboard",
@@ -48,3 +49,4 @@ plt.title('Heatmap of Categories by Rank')
 plt.xlabel('Rank')
 plt.ylabel('Categories')
 plt.show()
+st.pyplot()
