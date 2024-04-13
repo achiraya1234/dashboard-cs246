@@ -102,58 +102,6 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ################################################
-def calculate_population_difference(input_df, input_Ranking):
-  selected_Ranking_data = input_df[input_df['Ranking'] == input_Ranking].reset_index()
-  previous_Ranking_data = input_df[input_df['Ranking'] == input_Ranking - 1].reset_index()
-  selected_Ranking_data['population_difference'] = selected_Ranking_data.population.sub(previous_Ranking_data.population, fill_value=0)
-  return pd.concat([selected_Ranking_data.states, selected_Ranking_data.id, selected_Ranking_data.population, selected_Ranking_data.population_difference], axis=1).sort_values(by="population_difference", ascending=False)
-
-  print(df_Ranking_difference_sorted)
-
-#################################################
-def make_donut(input_response, input_text, input_color):
-  if input_color == 'blue':
-      chart_color = ['#29b5e8', '#155F7A']
-  if input_color == 'green':
-      chart_color = ['#27AE60', '#12783D']
-  if input_color == 'orange':
-      chart_color = ['#F39C12', '#875A12']
-  if input_color == 'red':
-      chart_color = ['#E74C3C', '#781F16']
-
-  source = pd.DataFrame({
-      "Topic": ['', input_text],
-      "% value": [100-input_response, input_response]
-  })
-  source_bg = pd.DataFrame({
-      "Topic": ['', input_text],
-      "% value": [100, 0]
-  })
-
-  plot = alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
-      theta="% value",
-      color= alt.Color("Topic:N",
-                      scale=alt.Scale(
-                          #domain=['A', 'B'],
-                          domain=[input_text, ''],
-                          # range=['#29b5e8', '#155F7A']),  # 31333F
-                          range=chart_color),
-                      legend=None),
-  ).properties(width=130, height=130)
-
-  text = plot.mark_text(align='center', color="#29b5e8", font="Lato", fontSize=32, fontWeight=700, fontStyle="italic").encode(text=alt.value(f'{input_response} %'))
-  plot_bg = alt.Chart(source_bg).mark_arc(innerRadius=45, cornerRadius=20).encode(
-      theta="% value",
-      color= alt.Color("Topic:N",
-                      scale=alt.Scale(
-                          # domain=['A', 'B'],
-                          domain=[input_text, ''],
-                          range=chart_color),  # 31333F
-                      legend=None),
-  ).properties(width=130, height=130)
-  return plot_bg + plot + text
-
-################################################
 def format_number(num):
     if num > 100:
         if not num % 100:
