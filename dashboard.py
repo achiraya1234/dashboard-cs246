@@ -93,7 +93,7 @@ def make_donut(input_df, input_population, input_categories):
   donut_chart = alt.Chart(input_df).mark_arc().encode(
       theta=f'{input_population}:Q',
       color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
-      tooltip=['Categories', 'population']
+      tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
       width=300,
       height=300,
