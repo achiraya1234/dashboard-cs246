@@ -7,17 +7,7 @@ st.set_page_config(
     #page_icon="",
     layout="wide",
     initial_sidebar_state="expanded")
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #000000;
-        color: #ffffff; /* ตัวหนังสือสีขาว */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 alt.themes.enable("dark")
 
 df = pd.read_csv('https://raw.githubusercontent.com/achiraya1234/dashboard-cs246/main/finalproject%20-%20Form%20Responses%201.csv')
