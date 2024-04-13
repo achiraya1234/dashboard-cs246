@@ -76,7 +76,7 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
           #    alt.Tooltip('year:O', title='Year'),
           #    alt.Tooltip('population:Q', title='Population')
           #]
-      ).properties(width=900
+      ).properties(width=1000
       ).configure_axis(
       labelFontSize=12,
       titleFontSize=12
@@ -85,7 +85,6 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
   return heatmap
 
 #################################
-# สร้าง donut chart สำหรับ Ranking
 # สร้าง donut chart สำหรับ Ranking
 def make_donut(input_df, input_population, input_categories):
   donut_chart = alt.Chart(input_df).mark_arc().encode(
@@ -109,7 +108,7 @@ def format_number(num):
     return f'{num // 10} K'
 
 ###########################################
-col = st.columns((3, 4, 23), gap='medium')
+col = st.columns((3, 4, 3), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
