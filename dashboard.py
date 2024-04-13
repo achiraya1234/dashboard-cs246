@@ -33,7 +33,6 @@ c3 = df['สวัสดิการและสิ่งอำนวยคว�
 d3 = df['สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 3'].value_counts()['ด้านสิ่งแวดล้อม']
 
 ######################################
-# สร้าง DataFrame จากข้อมูลของคุณ
 data = {
     'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
     'Rank 1': [a1, b1, c1, d1],
@@ -42,11 +41,17 @@ data = {
 }
 df30 = pd.DataFrame(data)
 
-# สร้าง Heatmap
-plt.figure(figsize=(10, 6))
-sns.heatmap(df30.set_index('Categories'), cmap='YlGnBu', annot=True, fmt="d", linewidths=.5)
-plt.title('Heatmap of Categories by Rank')
-plt.xlabel('Rank')
-plt.ylabel('Categories')
-plt.show()
-st.pyplot()
+# สร้าง Heatmap ด้วย Altair
+heatmap = alt.Chart(df30).mark_rect().encode(
+    x=alt.X('Categories', title='Categories'),
+    y=alt.Y('Rank:N', title='Rank'),
+    color=alt.Color('value:Q', title='Value')
+).transform_fold(
+    fold=['Rank 1', 'Rank 2', 'Rank 3'],
+    as_=['Rank', 'value']
+).properties(
+    title='Heatmap of Categories by Rank'
+)
+
+# แสดง Heatmap ใน Streamlit
+st.altair_chart(heatmap)
