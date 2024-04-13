@@ -95,14 +95,6 @@ def make_donut(input_df, input_population, input_categories):
 
   return donut_chart
 
-################################################
-def format_number(num):
-    if num > 100:
-        if not num % 100:
-            return f'{num // 100} M'
-        return f'{round(num / 100, 1)} M'
-    return f'{num // 10} K'
-
 ###########################################
 col = st.columns((6, 4), gap='medium')
 with col[0]:
