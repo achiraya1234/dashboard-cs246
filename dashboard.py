@@ -41,24 +41,20 @@ data = {
 }
 df30 = pd.DataFrame(data)
 
-# สร้างแผนภูมิสำหรับแกน x และแกน y
-x_chart = alt.Chart(df30).mark_rect().encode(
+# สร้าง Heatmap ด้วย Altair
+heatmap = alt.Chart(df30).mark_rect().encode(
     x=alt.X('Categories:N', title='Categories', labelAngle=0),
-    color=alt.Color('Rank:N', title='Rank'),
-    tooltip='value:Q'
+    y=alt.Y('Rank:N', title='Rank', labelAngle=0),
+    color=alt.Color('value:Q', title='Value')
+).transform_fold(
+    fold=['Rank 1', 'Rank 2', 'Rank 3'],
+    as_=['Rank', 'value']
 ).properties(
-    width=300,
-    height=300
+    width=600,
+    height=400,
+    title='Heatmap of Categories by Rank'
 )
 
-y_chart = alt.Chart(df30).mark_rect().encode(
-    y=alt.Y('Rank:N', title='Rank', axis=alt.Axis(labelAngle=0)),
-    color=alt.Color('Categories:N', title='Categories'),
-    tooltip='value:Q'
-).properties(
-    width=300,
-    height=300
-)
+# แสดง Heatmap ใน Streamlit
+st.altair_chart(heatmap)
 
-# แสดงแผนภูมิใน Streamlit
-st.altair_chart(alt.hconcat(x_chart, y_chart))
