@@ -50,7 +50,7 @@ print(df_reshaped)
 with st.sidebar:
     st.title('Ranking')
 
-    Ranking = list(df_reshaped.Ranking.unique())[::-1]
+    Ranking = list(df_reshaped.Ranking.unique())
 
     selected_Ranking = st.selectbox('Select a Ranking', Ranking, index=0)
     df_selected_Ranking = df_reshaped[df_reshaped.Ranking == selected_Ranking]
