@@ -95,8 +95,8 @@ def make_donut(input_df, input_population, input_categories):
       color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
       tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
-      width=300,
-      height=300,
+      width=500,
+      height=500,
       title='Ranking'
   )
 
