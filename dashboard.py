@@ -3,7 +3,7 @@ import pandas as pd
 import altair as alt
 
 st.set_page_config(
-    page_title="Ranking",
+    page_title="Dashboard",
     #page_icon="",
     layout="wide",
     initial_sidebar_state="expanded")
