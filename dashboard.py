@@ -72,10 +72,6 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
                           scale=alt.Scale(scheme=input_color_theme)),
           stroke=alt.value('black'),
           strokeWidth=alt.value(0.25),
-          #tooltip=[
-          #    alt.Tooltip('year:O', title='Year'),
-          #    alt.Tooltip('population:Q', title='Population')
-          #]
       ).properties(width=1000
       ).configure_axis(
       labelFontSize=12,
@@ -92,7 +88,7 @@ def make_donut(input_df, input_population, input_categories):
       color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
       tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
-      #width=350,
+      width=450,
       #height=350,
       title='Ranking'
   )
