@@ -61,8 +61,6 @@ with st.sidebar:
     print(df_selected_Ranking_sorted)
 
 ##################################
-import altair as alt
-
 alt.themes.enable("dark")
 
 heatmap = alt.Chart(df_reshaped).mark_rect().encode(
@@ -88,9 +86,6 @@ heatmap = alt.Chart(df_reshaped).mark_rect().encode(
 heatmap
 
 #################################
-import altair as alt
-import pandas as pd
-
 # สร้าง donut chart สำหรับ Ranking 1
 donut_chart_rank1 = alt.Chart(df_reshaped[df_reshaped['Ranking'] == 'Rank 1']).mark_arc().encode(
     theta='population:Q',
