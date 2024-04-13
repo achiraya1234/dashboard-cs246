@@ -89,17 +89,17 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
 #################################
 # สร้าง donut chart สำหรับ Ranking
 def make_donut(input_df, input_population, input_categories):
-  donut_chart = alt.Chart(input_df).mark_arc().encode(
-      theta=f'{input_population}:Q',
-      color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
-      tooltip=['Categories', 'population']
-  ).properties(
-      width=200,
-      height=200,
-      title='Ranking 1'
-  )
+    donut_chart = alt.Chart(input_df).mark_arc().encode(
+        theta=f'{input_population}:Q',
+        color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
+        tooltip=[f'{input_categories}', f'{input_population}']
+    ).properties(
+        width=200,
+        height=200,
+        title='Donut Chart'
+    )
 
-  return donut_chart
+    return donut_chart
 
 ################################################
 def format_number(num):
