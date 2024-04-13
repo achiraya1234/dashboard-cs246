@@ -114,8 +114,8 @@ def format_number(num):
 col = st.columns((5.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
-  donut_chart = make_donut(df_reshaped, df_selected_Ranking, 'Categories')
-  st.altair_chart(donut_chart)
+    donut_chart = make_donut(df_reshaped, df_selected_Ranking, 'Categories')
+    st.altair_chart(donut_chart)
 
 with col[1]:
     st.markdown('#### Total Ranking')
