@@ -111,7 +111,7 @@ def format_number(num):
     return f'{num // 10} K'
 
 ###########################################
-col = st.columns((1.5, 4.5, 2), gap='medium')
+col = st.columns((5.5, 4.5), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     
