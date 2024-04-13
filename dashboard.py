@@ -87,41 +87,19 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
   return heatmap
 
 #################################
-# สร้าง donut chart สำหรับ Ranking 1
-donut_chart_rank1 = alt.Chart(df_reshaped[df_reshaped['Ranking'] == 'Rank 1']).mark_arc().encode(
-    theta='population:Q',
-    color=alt.Color('Categories:N', scale=alt.Scale(scheme='category20')),
-    tooltip=['Categories', 'population']
-).properties(
-    width=200,
-    height=200,
-    title='Ranking 1'
-)
+# สร้าง donut chart สำหรับ Ranking
+def make_donut(input_df, input_population, input_categories):
+  donut_chart = alt.Chart(input_df).mark_arc().encode(
+      theta=f'{input_population}:Q',
+      color=alt.Color(f'{input_categories}:N', scale=alt.Scale(scheme='category20')),
+      tooltip=['Categories', 'population']
+  ).properties(
+      width=200,
+      height=200,
+      title='Ranking 1'
+  )
 
-# สร้าง donut chart สำหรับ Ranking 2
-donut_chart_rank2 = alt.Chart(df_reshaped[df_reshaped['Ranking'] == 'Rank 2']).mark_arc().encode(
-    theta='population:Q',
-    color=alt.Color('Categories:N', scale=alt.Scale(scheme='category20')),
-    tooltip=['Categories', 'population']
-).properties(
-    width=200,
-    height=200,
-    title='Ranking 2'
-)
-
-# สร้าง donut chart สำหรับ Ranking 3
-donut_chart_rank3 = alt.Chart(df_reshaped[df_reshaped['Ranking'] == 'Rank 3']).mark_arc().encode(
-    theta='population:Q',
-    color=alt.Color('Categories:N', scale=alt.Scale(scheme='category20')),
-    tooltip=['Categories', 'population']
-).properties(
-    width=200,
-    height=200,
-    title='Ranking 3'
-)
-
-# แสดง donut charts ทั้ง 3 กราฟ
-donut_chart_rank1 | donut_chart_rank2 | donut_chart_rank3
+  return donut_chart
 
 ################################################
 def calculate_population_difference(input_df, input_Ranking):
@@ -185,6 +163,11 @@ def format_number(num):
 
 ###########################################
 col = st.columns((1.5, 4.5, 2), gap='medium')
+with col[0]:
+    st.markdown('#### Ranking')
+    
+    donut_chart = make_donut(df_reshaped, 'population', 'Categories')
+    st.altair_chart(donut_chart)
 
 with col[1]:
     st.markdown('#### Total Ranking')
