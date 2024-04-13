@@ -93,7 +93,7 @@ def make_donut(input_df, input_population, input_categories):
       tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
       width=350,
-      height=350,
+      #height=350,
       title='Ranking'
   )
 
