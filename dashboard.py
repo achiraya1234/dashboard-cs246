@@ -52,9 +52,9 @@ with st.sidebar:
 
     Ranking = list(df_reshaped.Ranking.unique())[::-1]
 
-    selected_Ranking = st.selectbox('Select a Ranking', Ranking, index=len(Ranking)-1)
+    selected_Ranking = st.selectbox('Select a Ranking', Ranking, index=0)
     df_selected_Ranking = df_reshaped[df_reshaped.Ranking == selected_Ranking]
-    df_selected_Ranking_sorted = df_selected_Ranking.sort_values(by="population", descending=True)
+    df_selected_Ranking_sorted = df_selected_Ranking.sort_values(by="population", ascending=False)
 
     color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
     selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
