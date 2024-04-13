@@ -110,13 +110,12 @@ with col[0]:
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart)
 
-with col[1]:
     st.markdown('#### Total Ranking')
     
     heatmap = make_heatmap(df_reshaped, 'Categories', 'Ranking', 'population', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
 
-
+with col[1]:
     st.markdown('#### Categories')
 
     st.dataframe(df_selected_Ranking_sorted,
