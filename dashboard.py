@@ -100,7 +100,7 @@ col = st.columns((6, 4), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
-    st.altair_chart(donut_chart)
+    st.altair_chart(donut_chart, use_container_width=True)
 
     st.markdown('#### Total Ranking')
     
