@@ -111,7 +111,7 @@ def format_number(num):
     return f'{num // 10} K'
 
 ###########################################
-col = st.columns((5.5, 4.5), gap='medium')
+col = st.columns((4, 4, 2), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
@@ -122,3 +122,22 @@ with col[1]:
     
     heatmap = make_heatmap(df_reshaped, 'Categories', 'Ranking', 'population', selected_color_theme)
     st.altair_chart(heatmap, use_container_width=True)
+
+with col[2]:
+    st.markdown('#### Top States')
+
+    st.dataframe(df_selected_Ranking_sorted,
+                 column_order=("Categories", "population"),
+                 hide_index=True,
+                 width=None,
+                 column_config={
+                    "Categories": st.column_config.TextColumn(
+                        "Categories",
+                    ),
+                    "population": st.column_config.ProgressColumn(
+                        "Population",
+                        format="%f",
+                        min_value=0,
+                        max_value=max(df_selected_Ranking_sorted.population),
+                     )}
+                 )
