@@ -223,7 +223,6 @@ with col[1]:
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
     
-    st.markdown('#### Categories')
     st.dataframe(df_selected_Ranking_sorted,
                  column_order=("Categories", "population"),
                  hide_index=True,
