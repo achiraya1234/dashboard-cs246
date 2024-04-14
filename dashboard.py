@@ -184,7 +184,7 @@ def make_gauge(input_df, input_category, input_average):
     ).properties(
         width=200,
         height=150,
-        title=f"{input_df['Categories'].iloc[0].values}"
+        title=f"{input_df['Categories'].iloc[0]}"
     )
 
 # Add full value text for the selected category
