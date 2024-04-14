@@ -72,6 +72,17 @@ df_reshaped1 = pd.melt(df1, id_vars=['Categories'], value_vars=['Satisfaction_5'
 # แสดง DataFrame ที่ได้
 print(df_reshaped1)
 
+########################################
+# คำนวณค่าเฉลี่ยของความพึงพอใจในหมวดหมู่การศึกษาตามวิธีที่ระบุ
+avg1 = ((df_reshaped1[df_reshaped1['Categories'] == 'การเดินทางและความปลอดภัย']['population'] * df_reshaped1[df_reshaped1['Categories'] == 'การเดินทางและความปลอดภัย']['Satisfaction'].str[-1].astype(int)).sum() / 102).round(2)
+avg2 = ((df_reshaped1[df_reshaped1['Categories'] == 'การศึกษา']['population'] * df_reshaped1[df_reshaped1['Categories'] == 'การศึกษา']['Satisfaction'].str[-1].astype(int)).sum() / 102).round(2)
+avg3 = ((df_reshaped1[df_reshaped1['Categories'] == 'สุขภาพ']['population'] * df_reshaped1[df_reshaped1['Categories'] == 'สุขภาพ']['Satisfaction'].str[-1].astype(int)).sum() / 102).round(2)
+avg4 = ((df_reshaped1[df_reshaped1['Categories'] == 'สิ่งแวดล้อม']['population'] * df_reshaped1[df_reshaped1['Categories'] == 'สิ่งแวดล้อม']['Satisfaction'].str[-1].astype(int)).sum() / 102).round(2)
+
+print(avg1, avg2, avg3, avg4)
+
+average = [avg1, avg2, avg3, avg4]
+
 ###############################
 data_rank = {
     'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
@@ -146,15 +157,21 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ########################################
-def make_gauge(input_df, input_population, input_Satisfaction):
-    gauge_chart = alt.Chart(input_df).mark_bar().encode(
-        y=alt.Y(f'{input_population}:Q', axis=None),
-        color=alt.Color(f'{input_Satisfaction}:N', scale=alt.Scale(scheme='category20')),
-        tooltip=[f'{input_Satisfaction}', f'{input_population}']
+# Create a function to generate the gauge chart for a category
+def make_gauge(category, average):
+    color_scale = alt.Scale(
+
+        domain=[1, 1.8, 2.6, 3.4, 4.2, 5],
+        range=["red", "orange", "yellow", "lightgreen", "green"]
+    )
+
+    gauge_chart = alt.Chart(pd.DataFrame({'Category': [category], 'Average': [average]})).mark_bar().encode(
+        x=alt.X('Average:Q', axis=None),
+        color=alt.Color('Average:Q', scale=color_scale, legend=None)
     ).properties(
+        title=category,
         width=200,
-        height=200,
-        title='Gauge Chart'
+        height=100
     )
 
     return gauge_chart
@@ -166,9 +183,9 @@ with col[0]:
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
 
-    st.markdown('#### Satisfaction')
-    gauge_chart = make_gauge(df_selected_Categories, 'population', 'Satisfaction')
-    st.altair_chart(gauge_chart)
+    st.markdown('#### Mean Satisfaction')
+    gauge_chart = make_gauge('Satisfaction', average)  # Use the function make_gauge correctly
+    st.altair_chart(gauge_chart)  # Use the correct variable name for the gauge chart
 
 with col[1]:
     st.markdown('#### Categories')
