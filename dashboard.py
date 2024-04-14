@@ -177,8 +177,8 @@ def make_donut(input_df, input_population, input_categories):
 # Create Gauge Chart using Altair for the selected category
 def make_gauge(input_df, input_category, input_average):
     bar_chart_selected = alt.Chart(input_df).mark_bar().encode(
-        x=alt.Y(f'{input_category}', title=None),
-        y=alt.X(f'{input_average}', title=None, scale=alt.Scale(domain=(0, 5))),
+        y=alt.Y(f'{input_category}', title=None),
+        x=alt.X(f'{input_average}', title=None, scale=alt.Scale(domain=(0, 5))),
         color=alt.Color(f'{input_average}:Q', scale=color_scale, legend=None),
         tooltip=[f'{input_category}', f'{input_average}']
     ).properties(
