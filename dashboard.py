@@ -182,7 +182,7 @@ def make_gauge(input_df, input_category, input_average):
         color=alt.Color(f'{input_average}:Q', scale=color_scale, legend=None),
         tooltip=[f'{input_category}', f'{input_average}']
     ).properties(
-        width=200,
+        width=400,
         height=150,
         title=f"{input_df['Categories'].iloc[0]}"
     )
