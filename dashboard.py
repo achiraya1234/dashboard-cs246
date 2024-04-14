@@ -180,7 +180,7 @@ col = st.columns((4, 6), gap='medium')
 with col[0]:
     st.markdown('#### Mean Satisfaction')
     gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
-    st.altair_chart(gauge_chart, use_container_width=True))
+    st.altair_chart(gauge_chart, use_container_width=True)
 
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
