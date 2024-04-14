@@ -114,8 +114,8 @@ color_scale = alt.Scale(
 
 legend_data = pd.DataFrame({'value': [5, 4, 3, 2, 1]})
 legend_bar = alt.Chart(legend_data).mark_rect().encode(
-    y=alt.Y('value:O', axis=alt.Axis(title='Value')),
-    color=alt.Color('value:Q', scale=color_scale, sort='descending')
+    y=alt.Y('value:O', axis=alt.Axis(title='Value'), sort=alt.SortOrder('descending')),
+    color=alt.Color('value:Q', scale=color_scale)
 )
 
 ####################################
