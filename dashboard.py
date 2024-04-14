@@ -108,8 +108,8 @@ data_scale = pd.DataFrame({
 
 # Define color scale for gauge
 color_scale = alt.Scale(
-    domain=[5, 4.2, 3.4, 2.6, 1.8],
-    range=['green', 'lightgreen', 'yellow', 'orange', 'red']
+    domain=[1.8, 2.6, 3.4, 4.2, 5],
+    range=['red', 'orange', 'yellow', 'lightgreen', 'green']
 )
 
 legend_data = pd.DataFrame({'value': [5, 4, 3, 2, 1]})
