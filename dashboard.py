@@ -113,7 +113,7 @@ color_scale = alt.Scale(
 )
 ####################################
 with st.sidebar:
-    st.title('Categories')
+    st.title('Satisfaction')
 
     Categories = list(data_scale.Categories.unique())
 
