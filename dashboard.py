@@ -210,11 +210,15 @@ with col[0]:
     gauge_chart_with_legend = alt.hconcat(gauge_chart, legend_bar)
     st.altair_chart(gauge_chart_with_legend, use_container_width=True)
 
+    st.markdown('#### Total Ranking')
+    heatmap = make_heatmap(df_reshaped2, 'Categories', 'Ranking', 'population', selected_color_theme)
+    st.altair_chart(heatmap, use_container_width=True)
+
+with col[1]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
-
-with col[1]:
+    
     st.markdown('#### Categories')
     st.dataframe(df_selected_Ranking_sorted,
                  column_order=("Categories", "population"),
@@ -231,7 +235,3 @@ with col[1]:
                         max_value=max(df_selected_Ranking_sorted.population),
                      )}
                  )
-
-    st.markdown('#### Total Ranking')
-    heatmap = make_heatmap(df_reshaped2, 'Categories', 'Ranking', 'population', selected_color_theme)
-    st.altair_chart(heatmap, use_container_width=True)
