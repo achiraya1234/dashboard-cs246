@@ -206,7 +206,7 @@ with col[0]:
     
     # Combine selected Gauge Chart and Legend
     gauge_chart_with_legend = alt.hconcat(gauge_chart, legend_bar)
-    st.altair_chart(gauge_chart, use_container_width=True)
+    st.altair_chart(gauge_chart_with_legend, use_container_width=True)
 
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
