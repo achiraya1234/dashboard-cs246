@@ -146,11 +146,11 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ########################################
-def make_gauge(input_df2, input_Categories, input_mean):
-    gauge_chart = alt.Chart(input_df2).mark_arc(innerRadius=0.6, outerRadius=0.9).encode(
-        theta=f'{input_mean}:Q',
-        color=alt.Color(f'{input_mean}:N', scale=alt.Scale(scheme='category20')),
-        tooltip=[f'{input_Categories}', f'{input_mean}']
+def make_gauge(input_df, input_population, input_Satisfaction):
+    gauge_chart = alt.Chart(input_df).mark_bar().encode(
+        y=alt.Y(f'{input_population}:Q', axis=None),
+        color=alt.Color(f'{input_Satisfaction}:N', scale=alt.Scale(scheme='category20')),
+        tooltip=[f'{input_Satisfaction}', f'{input_population}']
     ).properties(
         width=200,
         height=200,
