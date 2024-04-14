@@ -198,14 +198,14 @@ col = st.columns((4, 6), gap='medium')
 with col[0]:
     st.markdown('#### Mean Satisfaction')
     gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
-    st.altair_chart(gauge_chart, use_container_width=True)
-
-    st.markdown('#### Ranking')
-    donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     
     # Combine selected Gauge Chart and Legend
     gauge_chart_with_legend = alt.hconcat(gauge_chart, legend)
     st.altair_chart(gauge_chart, use_container_width=True)
+
+    st.markdown('#### Ranking')
+    donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
+    st.altair_chart(donut_chart, use_container_width=True)
 
 with col[1]:
     st.markdown('#### Categories')
