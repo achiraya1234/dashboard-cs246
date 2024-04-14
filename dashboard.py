@@ -184,7 +184,7 @@ def make_gauge(input_df, input_category, input_average):
     ).properties(
         width=200,
         height=150,
-        title=f'{input_df}'
+        title=f'{input_df}:N'
     )
 
 # Add full value text for the selected category
