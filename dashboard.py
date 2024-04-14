@@ -124,7 +124,7 @@ with st.sidebar:
 
     Categories = list(data_scale.Categories.unique())
 
-    selected_Categories = st.selectbox('Select a Categories', Categories, index=len(Categories)-1)
+    selected_Categories = st.selectbox('Select a Categories', Categories, index=0)
     df_selected_Categories = data_scale[data_scale.Categories == selected_Categories]
     df_selected_Categories_sorted = df_selected_Categories.sort_values(by="average", ascending=False)
     
