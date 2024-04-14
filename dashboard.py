@@ -153,8 +153,8 @@ def make_heatmap(input_df, input_y, input_x, input_color, input_color_theme):
           stroke=alt.value('black'),
           strokeWidth=alt.value(0.25),
       ).properties(
-          width=300,
-          height=200,
+          width=350,
+          height=250,
       ).configure_axis(
           labelFontSize=12,
           titleFontSize=12
