@@ -101,15 +101,26 @@ df_reshaped2 = pd.melt(df, id_vars=['Categories'], value_vars=['Rank 1', 'Rank 2
 print(df_reshaped2)
 
 ###############################
+data_scale = pd.DataFrame({
+    'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
+    'average': average
+})
+
+####################################
 with st.sidebar:
     st.title('Categories')
-
+'''
     Categories = list(df_reshaped1.Categories.unique())[::-1]
 
     selected_Categories = st.selectbox('Select a Categories', Categories, index=len(Categories)-1)
     df_selected_Categories = df_reshaped1[df_reshaped1.Categories == selected_Categories]
     df_selected_Categories_sorted = df_selected_Categories.sort_values(by="population", ascending=False)
+'''
+    Categories = list(data_scale.Categories.unique())
 
+    selected_Categories = st.selectbox('Select a Categories', Categories, index=len(Categories)-1)
+    df_selected_Categories = data_scale[data_scale.Categories == selected_Categories]
+    df_selected_Categories_sorted = df_selected_Categories.sort_values(by="average", ascending=False)
     st.title('Ranking')
 
     Ranking = list(df_reshaped2.Ranking.unique())
