@@ -191,10 +191,7 @@ def make_gauge(input_df, input_category, input_average):
     ).encode(
         text=alt.Text(f'{input_average}:Q', format='.2f')  # รูปแบบของตัวเลข (ทศนิยม 1 ตำแหน่ง)
     )
-
-# Combine selected Gauge Chart and Legend
-    selected_chart_with_legend = alt.hconcat(bar_chart_selected + text_selected, legend)
-    return selected_chart_with_legend
+    return bar_chart_selected + text_selected
 
 ###########################################
 col = st.columns((4, 6), gap='medium')
@@ -205,7 +202,10 @@ with col[0]:
 
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
-    st.altair_chart(donut_chart, use_container_width=True)
+    
+    # Combine selected Gauge Chart and Legend
+    gauge_chart_with_legend = alt.hconcat(gauge_chart, legend)
+    st.altair_chart(gauge_chart, use_container_width=True)
 
 with col[1]:
     st.markdown('#### Categories')
