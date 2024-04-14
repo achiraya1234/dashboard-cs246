@@ -190,7 +190,7 @@ def make_gauge(input_df, input_category, input_average):
     text_selected = bar_chart_selected.mark_text(
         align='center',
         baseline='bottom',
-        dx=5,
+        dx=10,
         dy=0,  # ระยะห่างจากแท่งกราฟ
         color='black',
         fontSize=14,  # ขนาดตัวอักษร
