@@ -163,58 +163,25 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ########################################
-# Create DataFrame
-data_scale = pd.DataFrame({
-    'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
-    'average': average
-})
-
-# Define color scale for gauge
-color_scale = alt.Scale(
-    domain=[3.5, 3.7, 3.9, 4.0, 4.2],
-    range=['red', 'orange', 'yellow', 'lightgreen', 'green']
-)
-
-# Create Gauge Chart using Altair
-bar_chart = alt.Chart(data_scale).mark_bar().encode(
-    x=alt.X('Categories', title=None),
-    y=alt.Y('average', title=None, scale=alt.Scale(domain=(0, 5))),
-    color=alt.Color('average:Q', scale=color_scale, legend=None),
-    tooltip=['Categories', 'average']
-).properties(
+def make_gauge(input_df, input_category, input_average):
+  gauge_chart = alt.Chart(input_df).mark_bar().encode(
+    x=alt.X(f'{input_average}:Q', axis=None),
+    color=alt.Color(f'{input_average}:Q', scale=color_scale, legend=None),
+    tooltip=[f'{input_category}', f'{input_average}']
+  ).properties(
     width=200,
-    height=200
-)
+    height=100
+  )
 
-# Add full value text
-text = bar_chart.mark_text(
-    align='center',
-    baseline='bottom',
-    dx=0,
-    dy=-5,  # ระยะห่างจากแท่งกราฟ
-    color='black',
-    fontSize=14,  # ขนาดตัวอักษร
-).encode(
-    text=alt.Text('average:Q', format='.1f')  # รูปแบบของตัวเลข (ทศนิยม 1 ตำแหน่ง)
-)
-
-bar_chart = (bar_chart + text)
-
-# Create Legend
-legend = alt.Chart(pd.DataFrame({'value': [3.5, 3.7, 3.9, 4.0, 4.2]})).mark_rect().encode(
-    y=alt.Y('value:O', axis=alt.Axis(title='Value')),
-    color=alt.Color('value:Q', scale=color_scale)
-)
-
-# Combine Gauge Chart and Legend
-gauge_chart_with_legend = alt.hconcat(bar_chart, legend)
-
-# Display the Gauge Chart with Legend
-st.altair_chart(gauge_chart_with_legend, use_container_width=True)
+  return gauge_chart
 
 ###########################################
 col = st.columns((4, 6), gap='medium')
 with col[0]:
+    st.markdown('#### Mean Satisfaction')
+    gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
+    st.altair_chart(gauge_chart, use_container_width=True))
+
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
