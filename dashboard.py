@@ -15,6 +15,10 @@ df = pd.read_csv('https://raw.githubusercontent.com/achiraya1234/dashboard-cs246
 df = df.rename(columns={'1. สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 1': 'สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 1',
                         '2. สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 2': 'สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 2',
                         '3. สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 3': 'สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 3'})
+df = df.rename(columns={' [ด้านการเดินทางและความปลอดภัย]': 'ด้านการเดินทางและความปลอดภัย',
+                         ' [ด้านการศึกษา]': 'ด้านการศึกษา',
+                         ' [ด้านสุขภาพ]': 'ด้านสุขภาพ',
+                         ' [ด้านสิ่งแวดล้อม]': 'ด้านสิ่งแวดล้อม'})
 
 a1 = df['สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 1'].value_counts()['ด้านการเดินทางและความปลอดภัย']
 b1 = df['สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 1'].value_counts()['ด้านการศึกษา']
@@ -29,8 +33,47 @@ b3 = df['สวัสดิการและสิ่งอำนวยคว�
 c3 = df['สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 3'].value_counts()['ด้านสุขภาพ']
 d3 = df['สวัสดิการและสิ่งอำนวยความสะดวกที่สำคัญอันดับ 3'].value_counts()['ด้านสิ่งแวดล้อม']
 
+counts_5 = []
+counts_4 = []
+counts_3 = []
+counts_2 = []
+counts_1 = []
+
+for category_column in ['ด้านการเดินทางและความปลอดภัย', 'ด้านการศึกษา', 'ด้านสุขภาพ', 'ด้านสิ่งแวดล้อม']:
+    counts_5.append(df[category_column].value_counts().get(5, 0))
+    counts_4.append(df[category_column].value_counts().get(4, 0))
+    counts_3.append(df[category_column].value_counts().get(3, 0))
+    counts_2.append(df[category_column].value_counts().get(2, 0))
+    counts_1.append(df[category_column].value_counts().get(1, 0))
+
+#################################
+mean = df[['ด้านการเดินทางและความปลอดภัย', 'ด้านการศึกษา', 'ด้านสุขภาพ', 'ด้านสิ่งแวดล้อม']].mean().round(2)
+mean_data = {
+    'Categories': ['ด้านการเดินทางและความปลอดภัย', 'ด้านการศึกษา', 'ด้านสุขภาพ', 'ด้านสิ่งแวดล้อม'],
+    'Mean': mean
+}
+df_mean = pd.DataFrame(mean_data)
+
+data_mean = {
+    'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
+    'Satisfaction_5': counts_5,
+    'Satisfaction_4': counts_4,
+    'Satisfaction_3': counts_3,
+    'Satisfaction_2': counts_2,
+    'Satisfaction_1': counts_1
+}
+
+# สร้าง DataFrame
+df1 = pd.DataFrame(data_mean)
+
+# ใช้ pd.melt() เพื่อรวมคอลัมน์ 'Rank 1', 'Rank 2', และ 'Rank 3' เป็นคอลัมน์ 'population'
+df_reshaped1 = pd.melt(df1, id_vars=['Categories'], value_vars=['Satisfaction_5','Satisfaction_4','Satisfaction_3','Satisfaction_2','Satisfaction_1'], var_name='Satisfaction', value_name='population')
+
+# แสดง DataFrame ที่ได้
+print(df_reshaped1)
+
 ###############################
-data = {
+data_rank = {
     'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
     'Rank 1': [a1, b1, c1, d1],
     'Rank 2': [a2, b2, c2, d2],
@@ -38,22 +81,30 @@ data = {
 }
 
 # สร้าง DataFrame
-df = pd.DataFrame(data)
+df = pd.DataFrame(data_rank)
 
 # ใช้ pd.melt() เพื่อรวมคอลัมน์ 'Rank 1', 'Rank 2', และ 'Rank 3' เป็นคอลัมน์ 'population'
-df_reshaped = pd.melt(df, id_vars=['Categories'], value_vars=['Rank 1', 'Rank 2', 'Rank 3'], var_name='Ranking', value_name='population')
+df_reshaped2 = pd.melt(df, id_vars=['Categories'], value_vars=['Rank 1', 'Rank 2', 'Rank 3'], var_name='Ranking', value_name='population')
 
 # แสดง DataFrame ที่ได้
-print(df_reshaped)
+print(df_reshaped2)
 
 ###############################
 with st.sidebar:
+    st.title('Categories')
+
+    Categories = list(df_reshaped1.Categories.unique())[::-1]
+
+    selected_Categories = st.selectbox('Select a Categories', Categories, index=len(Categories)-1)
+    df_selected_Categories = df_reshaped1[df_reshaped1.Categories == selected_Categories]
+    df_selected_Categories_sorted = df_selected_Categories.sort_values(by="population", ascending=False)
+
     st.title('Ranking')
 
-    Ranking = list(df_reshaped.Ranking.unique())
+    Ranking = list(df_reshaped2.Ranking.unique())
 
     selected_Ranking = st.selectbox('Select a Ranking', Ranking, index=0)
-    df_selected_Ranking = df_reshaped[df_reshaped.Ranking == selected_Ranking]
+    df_selected_Ranking = df_reshaped2[df_reshaped2.Ranking == selected_Ranking]
     df_selected_Ranking_sorted = df_selected_Ranking.sort_values(by="population", ascending=False)
 
     color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
@@ -94,6 +145,20 @@ def make_donut(input_df, input_population, input_categories):
 
   return donut_chart
 
+########################################
+def make_gauge(input_df2, input_Categories, input_mean):
+    gauge_chart = alt.Chart(input_df2).mark_arc(innerRadius=0.6, outerRadius=0.9).encode(
+        theta=f'{input_mean}:Q',
+        color=alt.Color(f'{input_mean}:N', scale=alt.Scale(scheme='category20')),
+        tooltip=[f'{input_Categories}', f'{input_mean}']
+    ).properties(
+        width=200,
+        height=200,
+        title='Gauge Chart'
+    )
+
+    return gauge_chart
+
 ###########################################
 col = st.columns((6, 4), gap='medium')
 with col[0]:
@@ -101,14 +166,12 @@ with col[0]:
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
 
-    st.markdown('#### Total Ranking')
-    
-    heatmap = make_heatmap(df_reshaped, 'Categories', 'Ranking', 'population', selected_color_theme)
-    st.altair_chart(heatmap, use_container_width=True)
+    st.markdown('#### Satisfaction')
+    gauge_chart = make_gauge(df_selected_Categories, 'population', 'Satisfaction')
+    st.altair_chart(gauge_chart)
 
 with col[1]:
     st.markdown('#### Categories')
-
     st.dataframe(df_selected_Ranking_sorted,
                  column_order=("Categories", "population"),
                  hide_index=True,
@@ -124,3 +187,7 @@ with col[1]:
                         max_value=max(df_selected_Ranking_sorted.population),
                      )}
                  )
+
+    st.markdown('#### Total Ranking')
+    heatmap = make_heatmap(df_reshaped2, 'Categories', 'Ranking', 'population', selected_color_theme)
+    st.altair_chart(heatmap, use_container_width=True)
