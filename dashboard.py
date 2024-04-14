@@ -111,6 +111,11 @@ color_scale = alt.Scale(
     domain=[3.5, 3.7, 3.9, 4.0, 4.2],
     range=['red', 'orange', 'yellow', 'lightgreen', 'green']
 )
+
+legend_bar = alt.Chart(pd.DataFrame({'value': [1, 2, 3, 4, 5]})).mark_rect().encode(
+    y=alt.Y('value:O', axis=alt.Axis(title='Value')),
+    color=alt.Color('value:Q', scale=color_scale)
+)
 ####################################
 with st.sidebar:
     st.title('Satisfaction')
@@ -200,7 +205,7 @@ with col[0]:
     gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
     
     # Combine selected Gauge Chart and Legend
-    gauge_chart_with_legend = alt.hconcat(gauge_chart, legend)
+    gauge_chart_with_legend = alt.hconcat(gauge_chart, legend_bar)
     st.altair_chart(gauge_chart, use_container_width=True)
 
     st.markdown('#### Ranking')
