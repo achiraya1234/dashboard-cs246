@@ -168,7 +168,7 @@ def make_donut(input_df, input_population, input_categories):
       tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
       width=400,
-      title='Ranking'
+      title=f"{input_df['Ranking'].iloc[0]}"
   )
 
   return donut_chart
@@ -201,7 +201,7 @@ def make_gauge(input_df, input_category, input_average):
     return bar_chart_selected + text_selected
 
 ###########################################
-col = st.columns((4, 6), gap='medium')
+col = st.columns((5, 5), gap='medium')
 with col[0]:
     st.markdown('#### Mean Satisfaction')
     gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
