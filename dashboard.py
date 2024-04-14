@@ -160,7 +160,7 @@ def make_gauge(input_df2, input_Categories, input_mean):
     return gauge_chart
 
 ###########################################
-col = st.columns((6, 4), gap='medium')
+col = st.columns((4, 6), gap='medium')
 with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
