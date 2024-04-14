@@ -157,24 +157,51 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ########################################
-# Create a function to generate the gauge chart for a category
-def make_gauge(category, average):
-    color_scale = alt.Scale(
+# Create DataFrame
+data_scale = pd.DataFrame({'Categories': Categories, 'average': average})
 
-        domain=[1, 1.8, 2.6, 3.4, 4.2, 5],
-        range=["red", "orange", "yellow", "lightgreen", "green"]
-    )
+# Define color scale for gauge
+color_scale = alt.Scale(
+    domain=[3.5, 3.7, 3.9, 4.0, 4.2],
+    range=['red', 'orange', 'yellow', 'lightgreen', 'green']
+)
 
-    gauge_chart = alt.Chart(pd.DataFrame({'Category': [category], 'Average': [average]})).mark_bar().encode(
-        x=alt.X('Average:Q', axis=None),
-        color=alt.Color('Average:Q', scale=color_scale, legend=None)
-    ).properties(
-        title=category,
-        width=200,
-        height=100
-    )
+# Create Gauge Chart using Altair
+bar_chart = alt.Chart(data_scale).mark_bar().encode(
+    x=alt.X('Categories', title=None),
+    y=alt.Y('average', title=None, scale=alt.Scale(domain=(0, 5))),
+    color=alt.Color('average:Q', scale=color_scale, legend=None),
+    tooltip=['Categories', 'average']
+).properties(
+    width=200,
+    height=200
+)
 
-    return gauge_chart
+# Add full value text
+text = bar_chart.mark_text(
+    align='center',
+    baseline='bottom',
+    dx=0,
+    dy=-5,  # ระยะห่างจากแท่งกราฟ
+    color='black',
+    fontSize=14,  # ขนาดตัวอักษร
+).encode(
+    text=alt.Text('average:Q', format='.1f')  # รูปแบบของตัวเลข (ทศนิยม 1 ตำแหน่ง)
+)
+
+bar_chart = (bar_chart + text)
+
+# Create Legend
+legend = alt.Chart(pd.DataFrame({'value': [3.5, 3.7, 3.9, 4.0, 4.2]})).mark_rect().encode(
+    y=alt.Y('value:O', axis=alt.Axis(title='Value')),
+    color=alt.Color('value:Q', scale=color_scale)
+)
+
+# Combine Gauge Chart and Legend
+gauge_chart_with_legend = alt.hconcat(bar_chart, legend)
+
+# Display the Gauge Chart with Legend
+st.altair_chart(gauge_chart_with_legend, use_container_width=True)
 
 ###########################################
 col = st.columns((4, 6), gap='medium')
@@ -182,10 +209,6 @@ with col[0]:
     st.markdown('#### Ranking')
     donut_chart = make_donut(df_selected_Ranking, 'population', 'Categories')
     st.altair_chart(donut_chart, use_container_width=True)
-
-    st.markdown('#### Mean Satisfaction')
-    gauge_chart = make_gauge('Satisfaction', average)  # Use the function make_gauge correctly
-    st.altair_chart(gauge_chart)  # Use the correct variable name for the gauge chart
 
 with col[1]:
     st.markdown('#### Categories')
