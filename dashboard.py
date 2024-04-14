@@ -183,7 +183,7 @@ def make_gauge(input_df, input_category, input_average):
         tooltip=[f'{input_category}', f'{input_average}']
     ).properties(
         width=200,
-        height=200
+        height=150
     )
 
 # Add full value text for the selected category
