@@ -168,17 +168,33 @@ def make_donut(input_df, input_population, input_categories):
   return donut_chart
 
 ########################################
+# Create Gauge Chart using Altair for the selected category
 def make_gauge(input_df, input_category, input_average):
-  gauge_chart = alt.Chart(input_df).mark_bar().encode(
-    x=alt.X(f'{input_average}:Q', axis=None),
-    color=alt.Color(f'{input_average}:Q', scale=color_scale, legend=None),
-    tooltip=[f'{input_category}', f'{input_average}']
-  ).properties(
-    width=200,
-    height=100
-  )
+    bar_chart_selected = alt.Chart(input_df).mark_bar().encode(
+        x=alt.X(f'{input_category}', title=None),
+        y=alt.Y(f'{input_average}', title=None, scale=alt.Scale(domain=(0, 5))),
+        color=alt.Color(f'{input_average}:Q', scale=color_scale, legend=None),
+        tooltip=[f'{input_category}', f'{input_average}']
+    ).properties(
+        width=200,
+        height=200
+    )
 
-  return gauge_chart
+# Add full value text for the selected category
+    text_selected = bar_chart_selected.mark_text(
+        align='center',
+        baseline='bottom',
+        dx=0,
+        dy=-5,  # ระยะห่างจากแท่งกราฟ
+        color='black',
+        fontSize=14,  # ขนาดตัวอักษร
+    ).encode(
+        text=alt.Text(f'{input_average}:Q', format='.2f')  # รูปแบบของตัวเลข (ทศนิยม 1 ตำแหน่ง)
+    )
+
+# Combine selected Gauge Chart and Legend
+    selected_chart_with_legend = alt.hconcat(bar_chart_selected + text_selected, legend)
+    return selected_chart_with_legend
 
 ###########################################
 col = st.columns((4, 6), gap='medium')
