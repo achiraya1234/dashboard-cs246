@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
+import plotly.graph_objects as go
 
 st.set_page_config(
     page_title="Dashboard",
