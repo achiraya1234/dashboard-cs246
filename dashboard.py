@@ -168,7 +168,6 @@ def make_donut(input_df, input_population, input_categories):
       tooltip=[f'{input_categories}', f'{input_population}']
   ).properties(
       width=250,
-      height=250,
       title=f"{input_df['Ranking'].iloc[0]}"
   )
 
