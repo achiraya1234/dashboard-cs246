@@ -106,6 +106,11 @@ data_scale = pd.DataFrame({
     'average': average
 })
 
+# Define color scale for gauge
+color_scale = alt.Scale(
+    domain=[3.5, 3.7, 3.9, 4.0, 4.2],
+    range=['red', 'orange', 'yellow', 'lightgreen', 'green']
+)
 ####################################
 with st.sidebar:
     st.title('Categories')
