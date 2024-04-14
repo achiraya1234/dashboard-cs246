@@ -158,7 +158,10 @@ def make_donut(input_df, input_population, input_categories):
 
 ########################################
 # Create DataFrame
-data_scale = pd.DataFrame({'Categories': Categories, 'average': average})
+data_scale = pd.DataFrame({
+    'Categories': ['การเดินทางและความปลอดภัย', 'การศึกษา', 'สุขภาพ', 'สิ่งแวดล้อม'],
+    'average': average
+})
 
 # Define color scale for gauge
 color_scale = alt.Scale(
