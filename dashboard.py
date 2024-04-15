@@ -120,7 +120,7 @@ legend_bar = alt.Chart(legend_data).mark_rect().encode(
 
 ####################################
 with st.sidebar:
-    st.title('Satisfaction')
+    st.title('Median Satisfaction')
 
     Categories = list(data_scale.Categories.unique())
 
@@ -128,7 +128,7 @@ with st.sidebar:
     df_selected_Categories = data_scale[data_scale.Categories == selected_Categories]
     df_selected_Categories_sorted = df_selected_Categories.sort_values(by="average", ascending=False)
     
-    st.title('Ranking')
+    st.title('Priority Ranking')
 
     Ranking = list(df_reshaped2.Ranking.unique())
 
@@ -207,7 +207,7 @@ def make_gauge(input_df, input_category, input_average):
 ###########################################
 col = st.columns((5, 5), gap='medium')
 with col[0]:
-    st.markdown('#### Mean Satisfaction')
+    st.markdown('#### Satisfaction')
     gauge_chart = make_gauge(df_selected_Categories,'Categories', 'average')
     
     # Combine selected Gauge Chart and Legend
